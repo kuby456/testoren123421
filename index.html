@@ -359,12 +359,49 @@ div[style*="display:flex;gap:10px"] {
   <button onclick="saveProfile()">שמור והמשך</button>
 </div>
 
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+const supabaseClient = supabase.createClient(
+  "https://gpdkkjvppcsyqcdfbfyd.supabase.co",
+  "sb_publishable_f5nIFbWwsTLCroOegC8vmw_WTxoEeeA"
+);
 
+  const DEV_MODE = true;
+// ---------------- INIT ----------------
+init();
 
   
+async function init() {
+  await supabaseClient.auth.getSession();
 
+  const { data } = await supabaseClient.auth.getUser();
+  const user = data?.user;
+
+  console.log("user:", user);
+
+  // 👇 רק בפרודקשן
+  if (!user && !DEV_MODE) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  setupSelects();
+  setupValidation();
+}
+
+// ---------------- CHECK PROFILE ----------------
+async function checkProfile(user) {
+  const { data } = await supabaseClient
+    .from("profiles")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (data) {
+    window.location.href = "index.html";
+  }
+}
 
 // ---------------- VALIDATION ----------------
 function setupValidation() {
