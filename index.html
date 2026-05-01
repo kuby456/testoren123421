@@ -1,622 +1,525 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>השלמת פרטים</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כרטיסי שידוכים • 4 סגנונות שונים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600&amp;family=Playfair+Display:wght@700&amp;family=Heebo:wght@400;500&amp;display=swap');
+        
+        body {
+            background: linear-gradient(135deg, #f8f1f4 0%, #e8f0f8 100%);
+            font-family: 'Assistant', system-ui, sans-serif;
+            }
+        
+        .card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-12px) scale(1.04);
+            box-shadow: 0 35px 60px -15px rgb(0 0 0 / 0.3);
+        }
 
-<style>
-/* עיצוב כללי */
-* {
-  box-sizing: border-box;
-}
+        /* סגנון 1 - מינימליסטי מודרני */
+        .style1 .photo {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
 
-body {
-  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-  
-  margin: 0;
-  padding: 20px;
-  direction: rtl;
-}
+        /* סגנון 2 - אלגנטי קלאסי */
+        .style2 {
+            border: 8px solid #d4af77;
+            box-shadow: 0 0 0 12px #f8f1e3;
+        }
+        .style2 .header {
+            background: linear-gradient(90deg, #5d4037, #8d5524);
+        }
 
-h2 {
-  text-align: center;
-  color: #1a1a2e;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
+        /* סגנון 3 - צבעוני וצעיר */
+        .style3 {
+            background: linear-gradient(145deg, #ff9a9e, #fad0c4);
+        }
+        .style3 .photo {
+            filter: brightness(1.1) contrast(1.15);
+        }
 
-.form {
-  max-width: 650px;
-  margin: 0 auto;
-  background: white;
-  padding: 30px 25px;
-  border-radius: 20px;
-  }
-
-/* שדות טופס */
-.field {
-  margin-bottom: 20px;
-}
-
-.field label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #333;
-  font-size: 14px;
-}
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: 12px 14px;
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  transition: 0.2s;
-  background-color: #fff;
-  font-family: inherit;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  border-color: #4f46e5;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-}
-
-.field textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-/* הודעת שדה חובה */
-
-.required {
-  display: none;
-  color: #e11d48;
-  font-size: 12px;
-  margin-top: 5px;
-  font-weight: normal;
-}
-/* כפתור */
-button {
-  background-color: #3730a3;
+        /* סגנון 4 - יוקרתי כהה */
+        .style4 {
+            background: #1a1a2e;
+            color: #f0e6d2;
+        }
+        .style4 .photo {
+            border-bottom: 6px solid #c9a66b;
+        }
+    </style>
+    <style>
+    
+    .card1{
+  min-height:310px;
+  border-radius:24px;
+  padding:18px;
+  position:relative;
+  overflow:hidden;
   color: white;
-  border: none;
-  width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 0;
-  cursor: pointer;
-  transition: background 0.2s;
-  margin-top: 12px;
 }
-
-button:hover {
-  background-color: #4338ca;
-}
-
-/* שדה העלאת תמונות */
-.field label span {
-  display: inline-block;
-  margin-bottom: 8px;
-}
-  .field-tio span{
-    display: column;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #333;
-  font-size: 14px;
-    text-align:center;
-    justify-content: center;
-    align-items: center;
-  }
-   .field-tio{
-     display: flex;
-  text-align:center;
-    justify-content: center;
-    align-items: center;
-   }
-input[type="file"] {
-  padding: 8px;
-  background: #f9fafb;
-  border: 1px dashed #aaa;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-#preview {
-  margin-top: 12px;
-}
-
-#preview img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  background: #f8f8f8;
-}
-
-/* ריווח קבוצת כפתורי הקבצים */
-div[style*="display:flex;gap:10px"] {
-  margin-bottom: 8px;
-}
-  
-  .upload-buttons {
-  display: flex;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.upload-btn {
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-  border-radius: 6px; /* מרובע עדין */
-  background: #4338ca;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s;
-  border: 1px solid #3730a3;
-}
-.upload-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.icon {
-  width: 50px;
-  height: 50px;
-  fill: white;
-}
-.upload-btn:hover {
-  background: #3730a3;
-}
-
-.upload-btn:active {
-  transform: scale(0.95);
-}
-
-/* תצוגת תמונות */
-.preview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.preview-img {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border: 1px solid black;
-}
-
-.img-box {
+.ax1{
   position: relative;
+ align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #fff; 
+  margin-bottom: 30px;
+  font-weight: 600;
+ }
+.card1 img{
+  width:78px;
+  height:78px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:12px;
 }
 
-.delete-btn {
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  background: black;
-  color: white;
-  font-size: 12px;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+.card1 h2{
+  font-size:22px;
+  margin-bottom:6px;
 }
-  
+
+.card1 .age1{
+  font-size:14px;
+  opacity:.8;
+  margin-bottom:12px;
+}
+
+.card1 p{
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:10px;
+}
+
+.tags1{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.tag1{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+}
+
+button1{
+  margin-top:15px;
+  width:100%;
+  padding:11px;
+  border:none;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* כרטיס 1 - גלאס */
+.glass-card1{
+  background:rgba(255,255,255,.09);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+.glass-card1 .tag1{
+  background:rgba(255,255,255,.14);
+}
+
+.glass-card1 button1{
+  background:white;
+  color:#111827;
+    display: flex; 
+    justify-content: center;
+    margin: 0 auto;
+}
+  .card-1 { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-1:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .card-2 {
+            background: linear-gradient(135deg, #f8f1e3, #f5e8d3);
+            border: 8px solid #4a3728;
+            box-shadow: 8px 8px 0 #4a3728;
+        }
+
+        .card-3 {
+            background: linear-gradient(145deg, #1e3a8a, #3b82f6);
+            color: white;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .card-4 {
+            border: 3px dashed #854d0e;
+            background: #fffbeb;
+            position: relative;
+        }
+        .card-4::before {
+            content: '💍';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 40px;
+            transform: rotate(15deg);
+        }
+ 
 </style>
 </head>
+<body class="bg-gray-100 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-12 text-gray-800"> כרטיסי שידוכים  תראה אם יש פו משהו שיכול להיות טוב לאתר <br> הכרטיסים הם עיצוב ראשוני ואני אמור לשנות לתקן ולדייק את הכרטיס שתבחר אז אל תבהל חח</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            
+            <!-- כרטיס 1: מודרני מינימליסטי -->
+            <div class="card-1 bg-white rounded-3xl overflow-hidden shadow-xl max-w-md mx-auto">
+                <div class="h-80 bg-gradient-to-br from-pink-400 to-purple-600 relative">
+                    <img src="https://picsum.photos/id/1011/400/400" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 text-black text-sm font-semibold px-4 py-1 rounded-full flex items-center gap-1">
+                        <i class="fas fa-heart text-red-500"></i> 24
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-3xl font-bold">שרה כהן</h2>
+                            <p class="text-gray-500">24 • ירושלים</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-emerald-600 font-semibold">גובה: 1.65</div>
+                            <div class="text-sm text-gray-500">לומדת חינוך</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid grid-cols-3 gap-3 text-center text-sm">
+                        <div class="bg-gray-100 py-3 rounded-2xl">אדוקה</div>
+                        <div class="bg-gray-100 py-3 rounded-2xl">צנועה</div>
+                        <div class="bg-gray-100 py-3 rounded-2xl">משפחתית</div>
+                    </div>
+                    <p class="mt-6 text-gray-600 leading-relaxed text-sm">
+                        מחפשת בן זוג לומד, עם חוש הומור, שמעריך משפחה ורוצה לבנות בית בישראל.
+                    </p>
+                    <button onclick="alert('פנייה נשלחה!')" 
+                            class="mt-8 w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-4 rounded-2xl font-semibold text-lg hover:scale-105 transition">
+                        שלח הודעה 💌
+                    </button>
+                </div>
+            </div>
 
-<body>
+            <!-- כרטיס 2: קלאסי אלגנטי -->
+            <div class="card-2 rounded-3xl overflow-hidden max-w-md mx-auto">
+                <div class="h-72 bg-[url('https://picsum.photos/id/201/600/400')] bg-cover relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-6 right-6 text-white">
+                        <h2 class="text-4xl font-serif">רבקה לוי</h2>
+                        <p class="text-xl opacity-90">26 • בני ברק</p>
+                    </div>
+                </div>
+                <div class="p-8 text-[#4a3728]">
+                    <div class="flex gap-8 text-sm mb-6">
+                        <div>גובה: 1.62</div>
+                        <div>תעודת בגרות</div>
+                        <div>עובדת בהוראה</div>
+                    </div>
+                    
+                    <div class="border-t border-b border-[#4a3728]/30 py-6 text-center leading-relaxed text-lg font-light">
+                        "אוהבת ללמוד, לארח, ולבשל. מחפשת בן זוג שרוצה בית חם מלא תורה ושמחה."
+                    </div>
+                    
+                    <div class="mt-8 flex items-center justify-between">
+                        <div class="text-2xl">💍</div>
+                        <button onclick="alert('פנייה נשלחה!')" 
+                                class="bg-[#4a3728] text-white px-10 py-4 rounded-xl font-semibold hover:bg-amber-900 transition">
+                            מעוניין
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-<h2>מילוי פרטי הפרופיל</h2>
+            <!-- כרטיס 3: מודרני דינמי -->
+            <div class="card-3 rounded-3xl overflow-hidden max-w-md mx-auto text-white">
+                <div class="p-8 pt-12">
+                    <div class="flex justify-between">
+                        <div>
+                            <span class="inline-block bg-white/20 text-xs px-3 py-1 rounded-full mb-2">גיל 23</span>
+                            <h2 class="text-4xl font-bold">מיכל אברהמי</h2>
+                            <p class="text-lg opacity-90">תל אביב • סטודנטית</p>
+                        </div>
+                        <img src="https://picsum.photos/id/64/120/120" 
+                             class="w-28 h-28 rounded-3xl border-4 border-white shadow-xl object-cover">
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-md mx-6 rounded-3xl p-6 mb-8">
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>גובה: 1.68</div>
+                        <div>צניעות בינונית</div>
+                        <div>משפחה גדולה</div>
+                        <div>אוהבת טיולים</div>
+                    </div>
+                </div>
+                
+                <div class="px-8 pb-8 text-sm leading-relaxed">
+                    מחפשת בחור רציני, עם ראש פתוח, שרוצה גם קריירה וגם בית חם. 
+                    אני אופטימית, יצירתית ומלאת אנרגיה.
+                </div>
+                
+                <button onclick="alert('פנייה נשלחה!')" 
+                        class="w-full py-7 bg-white text-blue-700 font-bold text-xl flex items-center justify-center gap-3 hover:bg-amber-200 transition">
+                    <i class="fas fa-paper-plane"></i>
+                    שלח בקשה
+                </button>
+            </div>
 
-<div class="form">
-
-  <div class="field">
-    <label>שם פרטי</label>
-    <input id="first_name">
-    <div class="required">שדה חובה</div>
-  </div>
-
-  <div class="field">
-    <label>שם משפחה</label>
-    <input id="last_name">
+            <!-- כרטיס 4: כפרי-מסורתי -->
+            <div class="card-4 rounded-3xl overflow-hidden max-w-md mx-auto p-2">
+                <div class="bg-white border-4 border-amber-900 rounded-3xl p-6">
+                    <div class="flex gap-6">
+                        <img src="https://picsum.photos/id/1005/180/180" 
+                             class="w-40 h-40 rounded-2xl object-cover border-4 border-amber-800">
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <h2 class="text-3xl font-serif text-amber-900">נועה שטיין</h2>
+                                <div class="text-4xl">🌸</div>
+                            </div>
+                            <p class="text-amber-700">25 • מודיעין</p>
+                            <div class="mt-4 space-y-2 text-sm">
+                                <div class="flex items-center gap-2"><span class="w-5">📍</span> מרכז</div>
+                                <div class="flex items-center gap-2"><span class="w-5">📚</span> לומדת במכללה</div>
+                                <div class="flex items-center gap-2"><span class="w-5">🏠</span> משפחה דתית-לאומית</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="my-6 border border-dashed border-amber-800 p-5 rounded-2xl text-sm leading-relaxed bg-amber-50">
+                        מחפשת שידוך רציני לבניית בית בישראל עם ערכים, שמחה והרבה אהבה.
+                    </div>
+                    
+                    <button onclick="alert('פנייה נשלחה!')" 
+                            class="w-full bg-gradient-to-r from-amber-700 to-amber-900 text-white py-5 rounded-2xl text-lg font-semibold hover:from-amber-800 hover:to-amber-950 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-ring"></i>
+                        מעוניין בשידוך
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        
+       
     </div>
+</body>
 
- <div class="field">
-  <label>גיל</label>
-  <select id="age"></select>
-  <div class="required">שדה חובה</div>
-</div>
+    <body class="min-h-screen">
+    
+     
 
-  <div class="field">
-  <label>גובה</label>
-  <select id="height"></select>
-</div>
-
-  <div class="field">
-  <label>מוצא</label>
-  <select id="origin">
-    <option value="">בחר מוצא</option>
-
-    <option>אשכנזי</option>
-    <option>ספרדי</option>
-    <option>מזרחי</option>
-    <option>תימני</option>
-    <option>מרוקאי</option>
-    <option>עיראקי</option>
-    <option>פרסי</option>
-    <option>כורדי</option>
-    <option>קווקזי</option>
-    <option>אתיופי</option>
-    <option>רוסי</option>
-    <option>אמריקאי</option>
-    <option>צרפתי</option>
-
-    <option>מעורב</option>
-    <option>אחר</option>
-  </select>
-
-  <div class="required">שדה חובה</div>
-</div>
-  
-
-  <div class="field">
-    <label>רמה דתית</label>
-    <select id="religion">
-      <option value="">בחר</option>
-      <option>חרדי</option>
-      <option>דתי</option>
-      <option>מסורתי</option>
-      <option>חילוני</option>
-    </select>
-    <div class="required">שדה חובה</div>
+    <div class="max-w-7xl mx-auto">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <br>
+             <div style=" padding: 30px; background: rgb(0,0,0,0.9); ">
+    <span class="ax1">כרטיס לדוגמה (לדעתי עיצוב אפלי גלאס)</span>
+<div class="card1 glass-card1">
+    <img src="https://i.pravatar.cc/150?img=12" alt="profile">
+    <h2>דניאל כהן</h2>
+    <div class="age1">בן 24 • ירושלים</div>
+    <p>בחור רגוע, אוהב ללמוד, משפחה, מוזיקה ושיחות טובות.</p>
+    <div class="tags1">
+      <span1 class="tag1">רגוע</span1>
+      <span1 class="tag1">משפחתי</span1>
+      <span1 class="tag1">מסודר</span1>
+    </div>
+    <br>
+    
+    <button1>צפייה בפרטים</button1>
+  </div>
   </div>
 
-  <div class="field">
-    <label>קצת עליי (לא חובה)</label>
-    <textarea id="about"></textarea>
-  </div>
 
-  <div class="field">
-    <label>מספר טלפון</label>
-    <input id="phone" type="tel">
-    <div class="required">שדה חובה</div>
-  </div>
-  
-<div class="field-tio">
+            <!-- כרטיס 1: מינימליסטי מודרני -->
+            <div class="style1 card bg-white rounded-3xl overflow-hidden shadow-2xl max-w-[340px] mx-auto">
+                <div class="photo h-80 relative">
+                    <img src="https://picsum.photos/id/1011/800/800" alt="שירה" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute top-6 right-6 bg-white/95 backdrop-blur-lg text-sm font-semibold px-5 py-2 rounded-3xl shadow-inner flex items-center gap-2">
+                        <i class="fas fa-heart text-red-500"></i>
+                        28
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24"></div>
+                    <div class="absolute bottom-6 right-6 text-white text-5xl font-black tracking-tighter">1.68</div>
+                </div>
+                <div class="px-7 pt-4 pb-7">
+                    <div class="flex justify-between items-baseline">
+                        <div>
+                            <h2 class="text-3xl font-semibold text-gray-900">שירה כהן</h2>
+                            <p class="text-purple-600 text-lg">24 • תל אביב</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs uppercase tracking-widest bg-purple-100 text-purple-700 px-3 py-1 rounded-2xl">דתייה • לאומית</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-5 flex gap-3 text-xs">
+                        <div class="flex-1 bg-purple-50 rounded-2xl py-3 text-center">
+                            <i class="fas fa-chalkboard-teacher text-purple-500 mb-1"></i><br>
+                            <strong>מורה לחינוך</strong>
+                        </div>
+                        <div class="flex-1 bg-purple-50 rounded-2xl py-3 text-center">
+                            <i class="fas fa-book-open text-purple-500 mb-1"></i><br>
+                            <strong>ספרות</strong>
+                        </div>
+                        <div class="flex-1 bg-purple-50 rounded-2xl py-3 text-center">
+                            <i class="fas fa-running text-purple-500 mb-1"></i><br>
+                            <strong>פילאטיס</strong>
+                        </div>
+                    </div>
+                    
+                    <p class="mt-6 text-gray-600 leading-relaxed text-[15px]">
+                        מחפשת בחור רציני, בעל ערכים ומשפחה חמה. אוהבת טיולים בטבע, ספרים טובים וארוחות שישי גדולות.
+                    </p>
+                    
+                    <button onclick="this.innerHTML='✓ נשלח!' ; this.style.backgroundColor='#10b981'" 
+                            class="mt-8 w-full py-4 bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white rounded-3xl text-lg font-semibold flex items-center justify-center gap-2 transition-all">
+                        <i class="fas fa-paper-plane"></i>
+                        שלח הודעה
+                    </button>
+                </div>
+            </div>
 
-  <label style="display:flex;justify-content:space-between;align-items:center;">
-   <span style="font-weight:bold;">
-  העלאת תמונות לכרטיס <br>
-  <span style="
-    background:#eee;
-    color:#555;
-    font-size:11px;
-    padding:2px 6px;
-    border-radius:4px;
-    margin-right:6px;
-  ">
-    (לא חובה אופציונלי)
-  </span>
-</span>
-  </label>
+            <!-- כרטיס 2: אלגנטי קלאסי -->
+            <div class="style2 card bg-[#f8f1e3] rounded-3xl overflow-hidden shadow-2xl max-w-[340px] mx-auto">
+                <div class="header h-72 relative flex items-end p-8">
+                    <img src="https://picsum.photos/id/1005/800/800" alt="רחל" 
+                         class="absolute inset-0 w-full h-full object-cover opacity-90">
+                    <div class="relative z-10 bg-white/90 text-[#5d4037] px-6 py-2 rounded-3xl text-sm font-medium flex items-center">
+                        <i class="fas fa-ring mr-2"></i>
+                        בת 26
+                    </div>
+                </div>
+                <div class="px-8 pt-6 pb-8">
+                    <h2 class="text-4xl font-serif text-[#5d4037]">רחל לוי</h2>
+                    <p class="flex items-center gap-2 text-[#8d5524] text-xl">
+                        <span>ירושלים</span> 
+                        <span class="text-3xl">•</span> 
+                        <span class="font-medium">1.65 מ'</span>
+                    </p>
+                    
+                    <div class="my-6 border-t border-b border-[#d4af77] py-5 grid grid-cols-3 text-center text-[#5d4037]">
+                        <div><strong>ספרנית</strong><br><span class="text-xs">עבודה</span></div>
+                        <div><strong>חרדית-לייט</strong><br><span class="text-xs">דת</span></div>
+                        <div><strong>בישול</strong><br><span class="text-xs">תחביב</span></div>
+                    </div>
+                    
+                    <p class="text-[#5d4037] text-base leading-relaxed">
+                        אוהבת שלווה, סדר וחום ביתי. מחפשת שותף לחיים עם אמונה חזקה וחיבור אמיתי.
+                    </p>
+                    
+                    <button onclick="this.innerHTML='✓ נשלח!' ; this.style.backgroundColor='#5d4037'" 
+                            class="mt-8 w-full py-4 bg-[#8d5524] text-white rounded-3xl text-lg font-medium flex items-center justify-center gap-2">
+                        <i class="fas fa-envelope"></i>
+                        יצירת קשר
+                    </button>
+                </div>
+            </div>
 
- 
-  </div>
-  
- <div class="upload-buttons">
+            <!-- כרטיס 3: צבעוני וצעיר -->
+            <div class="style3 card rounded-3xl overflow-hidden shadow-2xl max-w-[340px] mx-auto text-white">
+                <div class="photo h-80 relative">
+                    <img src="https://picsum.photos/id/1016/800/800" alt="מיכל" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-pink-500/70 to-transparent h-40"></div>
+                    <div class="absolute top-6 left-6 bg-white text-pink-500 text-sm font-bold px-4 py-1 rounded-2xl flex items-center">
+                        🔥 31
+                    </div>
+                    <div class="absolute top-6 right-6 text-6xl font-black drop-shadow-md">1.70</div>
+                </div>
+                <div class="px-7 py-6">
+                    <div class="flex justify-between">
+                        <h2 class="text-4xl font-bold">מיכל אברהמי</h2>
+                        <div class="text-right">
+                            <div class="text-2xl">22</div>
+                            <div class="text-xs -mt-1 opacity-75">באר שבע</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2 mt-4 text-sm">
+                        <span class="bg-white/30 backdrop-blur px-4 py-1 rounded-3xl">סטודנטית</span>
+                        <span class="bg-white/30 backdrop-blur px-4 py-1 rounded-3xl">מודרנית</span>
+                        <span class="bg-white/30 backdrop-blur px-4 py-1 rounded-3xl">ריקוד</span>
+                    </div>
+                    
+                    <p class="mt-5 text-white/90 text-[15px] leading-relaxed">
+                        אנרגיה גבוהה, אוהבת לצחוק ולטייל. מחפשת בחור שיודע להנות מהחיים וגם רציני לגבי עתיד.
+                    </p>
+                    
+                    <button onclick="this.innerHTML='✓ נשלח!' ; this.style.backgroundColor='#fff'; this.style.color='#ff6b9d'" 
+                            class="mt-7 w-full py-5 bg-white text-pink-600 rounded-3xl font-semibold text-xl flex items-center justify-center shadow-inner">
+                        <i class="fas fa-heart mr-3"></i>
+                        בוא נדבר
+                    </button>
+                </div>
+            </div>
 
-  <!-- העלאת תמונה -->
-  <label class="upload-btn">
-    <input type="file" id="imageInput" accept="image/*" multiple hidden>
+            <!-- כרטיס 4: יוקרתי כהה -->
+            <div class="style4 card rounded-3xl overflow-hidden shadow-2xl max-w-[340px] mx-auto">
+                <div class="photo h-80 relative">
+                    <img src="https://picsum.photos/id/1009/800/800" alt="נועה" 
+                         class="w-full h-full object-cover">
+                    <div class="absolute top-6 right-6 bg-[#c9a66b] text-[#1a1a2e] text-sm font-bold px-5 py-2 rounded-3xl flex items-center shadow-xl">
+                        27
+                    </div>
+                </div>
+                <div class="px-8 pt-6 pb-8">
+                    <h2 class="text-4xl font-light tracking-widest">נועה שטיין</h2>
+                    <div class="flex justify-between text-[#c9a66b] text-xl">
+                        <span>חיפה</span>
+                        <span class="font-mono text-3xl">1.72</span>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between items-center border border-[#c9a66b]/30 rounded-3xl py-4 px-6">
+                        <div class="text-center">
+                            <i class="fas fa-laptop text-2xl mb-1"></i>
+                            <div class="text-xs tracking-widest">מתכנתת</div>
+                        </div>
+                        <div class="h-8 w-px bg-[#c9a66b]/40"></div>
+                        <div class="text-center">
+                            <i class="fas fa-pray text-2xl mb-1"></i>
+                            <div class="text-xs tracking-widest">דתייה</div>
+                        </div>
+                        <div class="h-8 w-px bg-[#c9a66b]/40"></div>
+                        <div class="text-center">
+                            <i class="fas fa-mountain text-2xl mb-1"></i>
+                            <div class="text-xs tracking-widest">טיולים</div>
+                        </div>
+                    </div>
+                    
+                    <p class="mt-7 text-[#f0e6d2]/80 text-sm leading-relaxed">
+                        מחפשת קשר אמיתי, עמוק ומשמעותי. אוהבת אמנות, טכנולוגיה ורגעים שקטים עם משפחה.
+                    </p>
+                    
+                    <button onclick="this.innerHTML='✓ נשלח!' ; this.style.backgroundColor='#c9a66b'; this.style.color='#1a1a2e'" 
+                            class="mt-8 w-full py-4 border border-[#c9a66b] text-[#c9a66b] hover:bg-[#c9a66b] hover:text-[#1a1a2e] rounded-3xl text-lg font-medium">
+                        שלח בקשת שידוך
+                    </button>
+                </div>
+            </div>
 
-    <span class="icon-wrap">
-      <!-- אייקון תמונה -->
-      <svg viewBox="0 0 24 24" class="icon">
-        <path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2ZM8.5 11.5l2.5 3 3.5-4.5L20 17H4l4.5-5.5Z"/>
-      </svg>
-    </span>
+        </div>
 
-    העלאה תמונה
-  </label>
-
-  <!-- מצלמה -->
-  <label class="upload-btn">
-    <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
-
-    <span class="icon-wrap">
-      <!-- אייקון מצלמה -->
-      <svg viewBox="0 0 24 24" class="icon">
-        <path d="M9 3 7.17 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.17L15 3H9Zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-      </svg>
-    </span>
-
-    צלם תמונה
-  </label>
-
-</div>
-
-<div id="preview" class="preview"></div>
-
-  <button onclick="saveProfile()">שמור והמשך</button>
-</div>
-
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const supabaseClient = supabase.createClient(
-  "https://gpdkkjvppcsyqcdfbfyd.supabase.co",
-  "sb_publishable_f5nIFbWwsTLCroOegC8vmw_WTxoEeeA"
-);
-
-  const DEV_MODE = true;
-// ---------------- INIT ----------------
-init();
-
-  
-async function init() {
-  await supabaseClient.auth.getSession();
-
-  const { data } = await supabaseClient.auth.getUser();
-  const user = data?.user;
-
-  console.log("user:", user);
-
-  // 👇 רק בפרודקשן
-  if (!user && !DEV_MODE) {
-    window.location.href = "index.html";
-    return;
-  }
-
-  setupSelects();
-  setupValidation();
-}
-
-// ---------------- CHECK PROFILE ----------------
-async function checkProfile(user) {
-  const { data } = await supabaseClient
-    .from("profiles")
-    .select("id")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (data) {
-    window.location.href = "index.html";
-  }
-}
-
-// ---------------- VALIDATION ----------------
-function setupValidation() {
-  const requiredFields = [
-    "first_name",
-    "last_name",
-    "age",
-    "origin",
-    "religion",
-    "phone"
-  ];
-
-  requiredFields.forEach(id => {
-    const input = document.getElementById(id);
-
-    input.addEventListener("input", () => {
-      const error = input.parentElement.querySelector(".required");
-
-      if (!input.value.trim()) {
-        if (error) error.style.display = "block";
-        input.style.borderColor = "red";
-      } else {
-        if (error) error.style.display = "none";
-        input.style.borderColor = "#ccc";
-      }
-    });
-  });
-}
-
-function validate() {
-  let valid = true;
-
-  const requiredFields = [
-    "first_name",
-    "last_name",
-    "age",
-    "origin",
-    "religion",
-    "phone"
-  ];
-
-  requiredFields.forEach(id => {
-    const input = document.getElementById(id);
-    const error = input.parentElement.querySelector(".required");
-
-    if (!input.value.trim()) { // 🔥 אם ריק
-      if (error) error.style.display = "block";
-      input.style.borderColor = "red";
-      valid = false;
-    } else {
-      if (error) error.style.display = "none";
-      input.style.borderColor = "#ccc";
-    }
-  });
-
-  return valid;
-}
-
-// ---------------- IMAGES ----------------
-let images = [];
-
-document.getElementById("imageInput").addEventListener("change", handleFiles);
-document.getElementById("cameraInput").addEventListener("change", handleFiles);
-
-async function handleFiles(e) {
-  const files = Array.from(e.target.files);
-
-  for (let file of files) {
-    const compressed = await compressImage(file);
-    images.push(compressed);
-    renderImages();
-  }
-}
-
-function renderImages() {
-  const preview = document.getElementById("preview");
-  preview.innerHTML = "";
-
-  images.forEach((img, index) => {
-    const box = document.createElement("div");
-    box.className = "img-box";
-
-    const image = document.createElement("img");
-    image.src = URL.createObjectURL(img);
-    image.className = "preview-img";
-
-    const del = document.createElement("div");
-    del.className = "delete-btn";
-    del.innerText = "×";
-    del.onclick = () => {
-      images.splice(index, 1);
-      renderImages();
-    };
-
-    box.appendChild(image);
-    box.appendChild(del);
-    preview.appendChild(box);
-  });
-}
-
-// ---------------- COMPRESS ----------------
-function compressImage(file) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    const reader = new FileReader();
-
-    reader.onload = (e) => img.src = e.target.result;
-
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-
-      const MAX_WIDTH = 800;
-      const scale = MAX_WIDTH / img.width;
-
-      canvas.width = MAX_WIDTH;
-      canvas.height = img.height * scale;
-
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      canvas.toBlob((blob) => {
-        resolve(new File([blob], file.name, {
-          type: "image/jpeg"
-        }));
-      }, "image/jpeg", 0.7);
-    };
-
-    reader.readAsDataURL(file);
-  });
-}
-function setupSelects() {
-  const ageSelect = document.getElementById("age");
-  const heightSelect = document.getElementById("height");
-
-  if (!ageSelect || !heightSelect) return;
-
-  // גיל
-  ageSelect.innerHTML = '<option value="">בחר גיל</option>';
-  for (let i = 18; i <= 80; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = i;
-    ageSelect.appendChild(option);
-  }
-
-  // גובה
-  heightSelect.innerHTML = '<option value="">בחר גובה</option>';
-  for (let i = 140; i <= 210; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = i + " ס״מ";
-    heightSelect.appendChild(option);
-  }
-}
-  
-// ---------------- SAVE ----------------
-async function saveProfile() {
-
-  if (!validate()) return;
-
-  const { data: { user } } = await supabaseClient.auth.getUser();
-
-  const first_name = document.getElementById("first_name").value.trim();
-  const last_name = document.getElementById("last_name").value.trim();
-  const age = document.getElementById("age").value;
-  const phone = document.getElementById("phone").value.trim();
-
-  const height = document.getElementById("height").value;
-  const origin = document.getElementById("origin").value;
-  const religion = document.getElementById("religion").value;
-  const about = document.getElementById("about").value;
-
-  let imageUrls = [];
-
-  // העלאת תמונות
-  for (let img of images) {
-    const fileName = `${user.id}/${Date.now()}-${img.name}`;
-
-    const { error } = await supabaseClient.storage
-      .from("avatars")
-      .upload(fileName, img);
-
-    if (!error) {
-      const { data } = supabaseClient.storage
-        .from("avatars")
-        .getPublicUrl(fileName);
-
-      imageUrls.push(data.publicUrl);
-    }
-  }
-
-  // שמירה DB
-  const { error } = await supabaseClient
-    .from("profiles")
-    .upsert({
-      id: user.id,
-      first_name,
-      last_name,
-      age,
-      height,
-      origin,
-      religion,
-      about,
-      phone,
-      images: imageUrls
-    });
-
-  if (!error) {
-    window.location.href = "index.html";
-  } else {
-    console.log(error);
-    alert("שגיאה בשמירה");
-  }
-}
-</script>
-
+        <div class="text-center text-xs text-gray-500 mt-16">
+            העתק את כל הקוד הזה לקובץ .html ופתח בדפדפן • כל הכרטיסים עצמאיים ומוכנים לשימוש
+        </div>
+    </div>
 </body>
 </html>
